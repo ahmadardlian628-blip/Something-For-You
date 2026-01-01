@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Something</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                  url('foto dian.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.98);
+    }
+
+    h1 { font-size: 1.5rem; margin-bottom: 15px; }
+    p { font-size: 1rem; margin-bottom: 20px; }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 5px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-main { background: #ee9ca7; color: white; }
+    .btn-alt { background: #ddd; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-120px); opacity: 0; }
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: float 4s ease-in forwards;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgm" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3e1b6d9fa7.mp3?filename=soft-piano-ambient-110624.mp3" autoplay loop></audio>
+  <div class="card" id="content">
+    <h1>Hai Dian 👋</h1>
+    <p>Aku bikin web ini khusus buat kamu.</p>
+    <button class="btn-main" onclick="step2()">Lanjut</button>
+  </div>
+
+  <script>
+    const card = document.getElementById('content');
+
+    function transition(html) {
+      card.classList.add('fade-out');
+      setTimeout(() => {
+        card.innerHTML = html;
+        card.classList.remove('fade-out');
+      }, 500);
+    }
+
+    function spawnHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+    setInterval(spawnHeart, 1200);
+
+    function step2() {
+      transition(`
+        <h1>Ada yang mau aku bilang</h1>
+        <p>Sesuatu yang sudah lama aku simpan.</p>
+        <p>Kita sudah saling mengenal.</p>
+        <p>Dan aku ingin mengenal lebih jauh lagi.</p>
+        <button class="btn-main" onclick="step3()">Aku siap</button>
+      `);
+    }
+
+    function step3() {
+      transition(`
+        <h1>Jujur ya...</h1>
+        <p>Aku nyaman, senang, dan bahagia tiap ngobrol sama kamu.</p>
+        <button class="btn-main" onclick="step4()">Terus?</button>
+      `);
+    }
+
+    function step4() {
+      transition(`
+        <h1>Aku suka kamu ❤️</h1>
+        <p>Mau nggak kita lebih dari teman?</p>
+        <button class="btn-main" onclick="yes()">Mau</button>
+        <button class="btn-alt" onclick="no()">Aku pikir dulu</button>
+      `);
+    }
+
+    function yes() {
+      const nomorWA = "6283183124848";
+      const pesan = encodeURIComponent("Aku mau, kita ngobrol ya 😊");
+      window.location.href = `https://wa.me/${nomorWA}?text=${pesan}`;
+    }
+
+    function no() {
+      transition(`
+        <h1>🙂</h1>
+        <p>Gak apa-apa. Makasih sudah jujur.</p>
+        <p>Aku tetap menghargai kamu.</p>
+      `);
+    }
+  </script>
+</body>
+</html>
